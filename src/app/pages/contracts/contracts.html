@@ -7,6 +7,52 @@
     </app-search-form>
 
     <div class="search-results">
-        <p class="no-results">Enter search criteria above to find contracts</p>
+        <!-- Loading state -->
+        <div *ngIf="isLoading" class="loading">
+            <p>Searching for contracts...</p>
+        </div>
+
+        <!-- No results message -->
+        <div *ngIf="!isLoading && hasSearched && contracts.length === 0" class="no-results">
+            <p>No contracts found matching your criteria. Try adjusting your search terms.</p>
+        </div>
+
+        <!-- Results display -->
+        <div *ngIf="!isLoading && contracts.length > 0" class="results-container">
+            <h3>Found {{ contracts.length }} contract(s)</h3>
+
+            <div class="contract-card" *ngFor="let contract of contracts">
+                <div class="contract-header">
+                    <h4>{{ contract.title }}</h4>
+                    <span class="contract-id">{{ contract.id }}</span>
+                </div>
+
+                <div class="contract-details">
+                    <p><strong>Agency:</strong> {{ contract.agency }}</p>
+                    <p><strong>Location:</strong> {{ contract.location }}</p>
+                    <p><strong>Category:</strong> {{ contract.category | titlecase }}</p>
+                    <p><strong>Posted:</strong> {{ contract.postedDate | date }}</p>
+                    <p><strong>Deadline:</strong> {{ contract.responseDeadline | date }}</p>
+                    <p *ngIf="contract.estimatedValue">
+                        <strong>Estimated Value:</strong> {{ contract.estimatedValue | currency }}
+                    </p>
+                </div>
+
+                <div class="contract-description">
+                    <p>{{ contract.description }}</p>
+                </div>
+
+                <div class="contract-status">
+                    <span class="status-badge" [class]="'status-' + contract.status">
+                        {{ contract.status | titlecase }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Default message -->
+        <div *ngIf="!hasSearched" class="search-placeholder">
+            <p>Enter search criteria above to find contracts</p>
+        </div>
     </div>
 </div>

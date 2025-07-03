@@ -7,6 +7,55 @@
     </app-search-form>
 
     <div class="search-results">
-        <p class="no-results">Enter search criteria above to find grants</p>
+        <!-- Loading state -->
+        <div *ngIf="isLoading" class="loading">
+            <p>Searching for grants...</p>
+        </div>
+
+        <!-- No results message -->
+        <div *ngIf="!isLoading && hasSearched && grants.length === 0" class="no-results">
+            <p>No grants found matching your criteria. Try adjusting your search terms.</p>
+        </div>
+
+        <!-- Results display -->
+        <div *ngIf="!isLoading && grants.length > 0" class="results-container">
+            <h3>Found {{ grants.length }} grant(s)</h3>
+
+            <div class="grant-card" *ngFor="let grant of grants">
+                <div class="grant-header">
+                    <h4>{{ grant.title }}</h4>
+                    <span class="grant-id">{{ grant.id }}</span>
+                </div>
+
+                <div class="grant-details">
+                    <p><strong>Agency:</strong> {{ grant.agency }}</p>
+                    <p><strong>Category:</strong> {{ grant.category | titlecase }}</p>
+                    <p><strong>Funding Amount:</strong> {{ grant.fundingAmount | currency }}</p>
+                    <p><strong>Application Deadline:</strong> {{ grant.applicationDeadline | date }}</p>
+                </div>
+
+                <div class="grant-description">
+                    <p>{{ grant.description }}</p>
+                </div>
+
+                <div class="grant-eligibility">
+                    <h5>Eligibility:</h5>
+                    <ul>
+                        <li *ngFor="let requirement of grant.eligibility">{{ requirement }}</li>
+                    </ul>
+                </div>
+
+                <div class="grant-status">
+                    <span class="status-badge" [class]="'status-' + grant.status">
+                        {{ grant.status | titlecase }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Default message -->
+        <div *ngIf="!hasSearched" class="search-placeholder">
+            <p>Enter search criteria above to find grants</p>
+        </div>
     </div>
 </div>
