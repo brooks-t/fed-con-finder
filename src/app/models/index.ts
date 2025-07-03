@@ -1,2 +1,2 @@
-export * from './contract.interface';
-export * from './grant.interface';
+export * from './contract';
+export * from './grant';
