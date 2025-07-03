@@ -2,7 +2,11 @@
     <h2>Government Grants</h2>
     <p>Discover grant opportunities from Grants.gov</p>
 
-    <div class="search-placeholder">
-        <p>Grant search functionality coming soon...</p>
+    <app-search-form [searchType]="'grants'" [placeholder]="'Search grants by keywords...'"
+        (searchSubmitted)="onSearchSubmitted($event)">
+    </app-search-form>
+
+    <div class="search-results">
+        <p class="no-results">Enter search criteria above to find grants</p>
     </div>
 </div>

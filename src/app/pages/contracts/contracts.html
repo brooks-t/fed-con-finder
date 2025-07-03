@@ -2,7 +2,11 @@
     <h2>Government Contracts</h2>
     <p>Search and browse federal contracting opportunities from SAM.gov</p>
 
-    <div class="search-placeholder">
-        <p>Contract search functionality coming soon...</p>
+    <app-search-form [searchType]="'contracts'" [placeholder]="'Search contracts by keywords...'"
+        (searchSubmitted)="onSearchSubmitted($event)">
+    </app-search-form>
+
+    <div class="search-results">
+        <p class="no-results">Enter search criteria above to find contracts</p>
     </div>
 </div>
