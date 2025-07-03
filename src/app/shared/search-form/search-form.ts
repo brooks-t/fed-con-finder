@@ -1,5 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 export interface SearchCriteria {
@@ -23,16 +28,22 @@ export class SearchForm {
 
   constructor(private formBuilder: FormBuilder) {
     this.searchForm = this.formBuilder.group({
-      keywords: [''],
+      keywords: ['', [Validators.required, Validators.minLength(3)]],
       location: [''],
       category: [''],
     });
+  }
+
+  get keywords() {
+    return this.searchForm.get('keywords');
   }
 
   onSubmit() {
     if (this.searchForm.valid) {
       const searchCriteria: SearchCriteria = this.searchForm.value;
       this.searchSubmitted.emit(searchCriteria);
+    } else {
+      this.searchForm.markAllAsTouched();
     }
   }
 }

@@ -63,3 +63,27 @@
     cursor: not-allowed;
   }
 }
+
+.form-input.error,
+.form-select.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.error-messages {
+  margin-top: 0.25rem;
+
+  small {
+    color: #ef4444;
+    font-size: 0.875rem;
+  }
+}
+
+.search-button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+
+  &:hover {
+    background-color: #9ca3af;
+  }
+}
